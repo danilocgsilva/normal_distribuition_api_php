@@ -1,0 +1,9 @@
+services:
+  normal_distribuition_api_php:
+    build:
+      context: .
+    container_name: normal_distribuition_api_php
+    volumes:
+      - ./www:/var/www
+    ports:
+      - 1080:80
