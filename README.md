@@ -1,4 +1,4 @@
-# Normal distribuition api
+# Normal distribution api
 
 ## A quick way to have amounts normally distributed
 
@@ -49,5 +49,5 @@ The result:
 ## Setting standard deviation, mean and samples amount
 
 ```
-http://localhost:1080/http://localhost:1080/?samples=10&std_deviation=50&mean=200000
+http://localhost:1080/?samples=10&std_deviation=50&mean=200000
 ```
