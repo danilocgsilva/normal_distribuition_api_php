@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
-use MathPHP\Probability\Distribution\Continuous\Normal;
+use Symfony\Component\HttpFoundation\Request;
+use App\Services\GenerateValues;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): JsonResponse
+    public function index(Request $request, GenerateValues $generateValues): JsonResponse
     {
-        $mean = 10000;
-        $stdDeviation = 2000;
-        
-        $normal = new Normal($mean, $stdDeviation);
+        $mean = $request->get("mean") ?? "10000";
+        $stdDeviation = $request->get("std_deviation") ?? "2000";
+        $samplesAmount = $request->get("samples") ?? "20";
 
-        $values = [];
-        for ($i = 0; $i < 20; $i++) {
-            $values[] = $normal->rand();
-        }
+        $values = $generateValues
+            ->setMean((int) $mean)
+            ->setStdDeviation((int) $stdDeviation)
+            ->setSamplesAmount((int) $samplesAmount)
+            ->generateSamples();
         
         return $this->json($values);
     }
